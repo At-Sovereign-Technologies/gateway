@@ -1,0 +1,11 @@
+:80 {
+    # Backend
+    handle /api/* {
+        reverse_proxy 10.43.100.138:8080
+    }
+
+    # Frontend
+    handle {
+        reverse_proxy 10.43.99.72:8080
+    }
+}

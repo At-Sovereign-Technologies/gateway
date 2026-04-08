@@ -1,0 +1,19 @@
+services:
+  gateway:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
+  
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    command:
+        - "http"
+        - "gateway:80"
+    ports:
+        - 4040:4040
