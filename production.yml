@@ -43,12 +43,12 @@ services:
     citizen-query-service:
         image: ghcr.io/at-sovereign-technologies/citizen-query-service:latest
         environment:
-            - PORT: 8080
-            - DB_URL: jdbc:postgresql://citizen-query-postgres:5432/${CITIZENS_QUERY_DB_NAME}
-            - DB_USER: ${CITIZENS_QUERY_DB_USER}
-            - DB_PASSWORD: ${CITIZENS_QUERY_DB_PASSWORD}
-            - REDIS_HOST: citizens-query-redis
-            - REDIS_PORT: 6379
+            PORT: 8080
+            DB_URL: jdbc:postgresql://citizen-query-postgres:5432/${CITIZENS_QUERY_DB_NAME}
+            DB_USER: ${CITIZENS_QUERY_DB_USER}
+            DB_PASSWORD: ${CITIZENS_QUERY_DB_PASSWORD}
+            REDIS_HOST: citizens-query-redis
+            REDIS_PORT: 6379
         deploy:
             replicas: 2
             restart_policy:
