@@ -1,2 +1,2 @@
 export $(cat .env | xargs) 
-docker stack deploy -c compose.yml sello-legitimo --with-registry-auth
+docker stack deploy -c production.yml sello-legitimo --with-registry-auth
