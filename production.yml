@@ -1,0 +1,84 @@
+# Si estas leyendo esto, odio el hecho de que 
+# este archivo sea tan largo...
+#
+# La idea seria separarlo en varios archivos mas
+# pequeños, pero eso es a futuro.
+#                                   - Augusto
+
+services:
+    # Gateway
+    gateway:
+        image: caddy:latest
+        restart: unless-stopped
+        ports:
+            - 8181:80
+        volumes:
+            - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
+        deploy:
+            restart_policy:
+                condition: any
+            placement:
+                constraints:
+                  - node.role == manager
+            resources:
+                limits:
+                    cpus: "0.50"   # half a CPU core
+                    memory: 512M
+    ngrok:
+        image: ngrok/ngrok:latest
+        restart: unless-stopped
+        environment:
+            - NGROK_AUTHTOKEN=${GATEWAY_NGROK_AUTHTOKEN}
+        command:
+            - "http"
+            - "gateway:80"
+        deploy:
+            restart_policy:
+                condition: any
+            placement:
+                constraints:
+                - node.role == manager
+    
+    # Citizens Query
+    citizen-query-service:
+        image: ghcr.io/at-sovereign-technologies/citizen-query-service:latest
+        environment:
+            - DB_URL: jdbc:postgresql://citizen-query-postgres:5432/${CITIZENS_QUERY_DB_NAME}
+            - DB_USER: ${CITIZENS_QUERY_DB_USER}
+            - DB_PASSWORD: ${CITIZENS_QUERY_DB_PASSWORD}
+            - REDIS_HOST: citizens-query-redis
+            - REDIS_PORT: 6379
+        deploy:
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+        
+    citizen-query-postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: ${CITIZENS_QUERY_DB_NAME}
+            POSTGRES_USER: ${CITIZENS_QUERY_DB_USER}
+            POSTGRES_PASSWORD: ${CITIZENS_QUERY_DB_PASSWORD}
+        volumes:
+            - citizen_query_data:/var/lib/postgresql/data
+        deploy:
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+
+    citizens-query-redis:
+        image: redis:latest
+        command: redis-server --appendonly yes
+        deploy:
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+
+volumes:
+  citizen_query_data:
