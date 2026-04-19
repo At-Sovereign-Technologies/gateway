@@ -1,12 +1,17 @@
 :80 {
     # Citizens query
-    handle /api/v1/citizen/* {
+    handle /api/v1/citizen* {
         reverse_proxy citizen-query-service:8080
     }
 
     # Results service
-    handle /api/v1/results {
+    handle /api/v1/results* {
         reverse_proxy results-service:8080
+    }
+
+    # Elections Service
+    handle /api/v1/elections* {
+        reverse_proxy elections-query-service:8080
     }
 
     # Frontend

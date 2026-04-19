@@ -156,9 +156,61 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
+
+    # Elections Query
+    elections-query-service:
+        image: ghcr.io/at-sovereign-technologies/election-query-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://elections-query-postgres:5432/${ELECTIONS_QUERY_DB_NAME}
+            DB_USER: ${ELECTIONS_QUERY_DB_USER}
+            DB_PASSWORD: ${ELECTIONS_QUERY_DB_PASSWORD}
+            REDIS_HOST: elections-query-redis
+            REDIS_PORT: 6379
+        networks:
+            - sello-net
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+
+    elections-query-postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: ${ELECTIONS_QUERY_DB_NAME}
+            POSTGRES_USER: ${ELECTIONS_QUERY_DB_USER}
+            POSTGRES_PASSWORD: ${ELECTIONS_QUERY_DB_PASSWORD}
+        volumes:
+            - elections_query_data:/var/lib/postgresql/data
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+
+    elections-query-redis:
+        image: redis:latest
+        command: redis-server --appendonly yes
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
 volumes:
   citizen_query_data:
   results_data:
+  elections_query_data:
 
 networks:
   sello-net:
