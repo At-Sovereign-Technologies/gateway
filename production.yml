@@ -40,6 +40,17 @@ services:
             placement:
                 constraints:
                 - node.role == manager
+
+    # Frontend
+    frontend:
+        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:latest
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
     
     # Citizens Query
     citizen-query-service:
@@ -60,7 +71,6 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-        
     citizen-query-postgres:
         image: postgres:14
         environment:
@@ -78,7 +88,6 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
-
     citizens-query-redis:
         image: redis:latest
         command: redis-server --appendonly yes
