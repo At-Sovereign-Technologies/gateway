@@ -44,6 +44,8 @@ services:
     # Frontend
     frontend:
         image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:latest
+        networks:
+            - sello-net
         deploy:
             replicas: 2
             restart_policy:
