@@ -207,10 +207,62 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
+
+    # Transparency Query
+    transparency-service:
+        image: ghcr.io/at-sovereign-technologies/transparency-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://transparency-postgres:5432/${TRANSPARENCY_SVC_DB_NAME}
+            DB_USER: ${TRANSPARENCY_SVC_DB_USER}
+            DB_PASSWORD: ${TRANSPARENCY_SVC_DB_PASSWORD}
+            REDIS_HOST: transparency-redis
+            REDIS_PORT: 6379
+        networks:
+            - sello-net
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+
+    transparency-postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: ${TRANSPARENCY_SVC_DB_NAME}
+            POSTGRES_USER: ${TRANSPARENCY_SVC_DB_USER}
+            POSTGRES_PASSWORD: ${TRANSPARENCY_SVC_DB_PASSWORD}
+        volumes:
+            - transparency_data:/var/lib/postgresql/data
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+
+    transparency-redis:
+        image: redis:latest
+        command: redis-server --appendonly yes
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
 volumes:
   citizen_query_data:
   results_data:
   elections_query_data:
+  transparency_data:
 
 networks:
   sello-net:

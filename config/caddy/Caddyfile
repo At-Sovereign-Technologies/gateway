@@ -1,5 +1,5 @@
 :80 {
-    # Citizens query
+    # Citizens Service
     @citizen_match {
         path /api/v1/citizen /api/v1/citizen/*
     }
@@ -8,7 +8,7 @@
         reverse_proxy tasks.citizen-query-service:8080
     }
 
-    # Results service
+    # Results Service
     @results_match {
         path /api/v1/results /api/v1/results/*
     }
@@ -25,6 +25,16 @@
     handle @elections_match {
         reverse_proxy tasks.elections-query-service:8080
     }
+
+    # Transparency Service
+    @transparency_match {
+        path /api/v1/transparency /api/v1/transparency/*
+    }
+    
+    handle @transparency_match {
+        reverse_proxy tasks.transparency-service:8080
+    }
+
 
     # Catch the rest of the calls to prevent
     # endpoint issues. - Augusto
