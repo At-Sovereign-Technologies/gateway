@@ -5,7 +5,7 @@
     }
 
     handle @citizen_match {
-        reverse_proxy citizen-query-service:8080
+        reverse_proxy tasks.citizen-query-service:8080
     }
 
     # Results service
@@ -14,7 +14,7 @@
     }
 
     handle @results_match {
-        reverse_proxy results-service:8080
+        reverse_proxy tasks.results-service:8080
     }
 
     # Elections Service
@@ -23,7 +23,7 @@
     }
     
     handle @elections_match {
-        reverse_proxy elections-query-service:8080
+        reverse_proxy tasks.elections-query-service:8080
     }
 
     # Catch the rest of the calls to prevent
