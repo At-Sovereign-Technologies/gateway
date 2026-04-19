@@ -25,6 +25,7 @@ services:
                 limits:
                     cpus: "0.50"   # half a CPU core
                     memory: 512M
+
     ngrok:
         image: ngrok/ngrok:latest
         environment:
@@ -73,6 +74,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
+
     citizen-query-postgres:
         image: postgres:14
         environment:
@@ -90,6 +92,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
+
     citizens-query-redis:
         image: redis:latest
         command: redis-server --appendonly yes
@@ -103,8 +106,59 @@ services:
                 constraints:
                     - node.labels.type == storage
 
+    # Results Service
+    results-service:
+        image: ghcr.io/at-sovereign-technologies/results-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://results-postgres:5432/${RESULTS_SVC_DB_NAME}
+            DB_USER: ${RESULTS_SVC_DB_USER}
+            DB_PASSWORD: ${RESULTS_SVC_DB_PASSWORD}
+            REDIS_HOST: results-redis
+            REDIS_PORT: 6379
+        networks:
+            - sello-net
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+
+    results-postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: ${RESULTS_SVC_DB_NAME}
+            POSTGRES_USER: ${RESULTS_SVC_DB_USER}
+            POSTGRES_PASSWORD: ${RESULTS_SVC_DB_PASSWORD}
+        volumes:
+            - results_data:/var/lib/postgresql/data
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+
+    results-redis:
+        image: redis:latest
+        command: redis-server --appendonly yes
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
 volumes:
   citizen_query_data:
+  results_data:
 
 networks:
   sello-net:
