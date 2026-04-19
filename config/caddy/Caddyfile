@@ -1,16 +1,19 @@
 :80 {
     # Citizens query
-    handle /api/v1/citizen* {
+    @citizen_paths path /api/v1/citizen /api/v1/citizen/*
+    handle @citizen_paths {
         reverse_proxy citizen-query-service:8080
     }
 
     # Results service
-    handle /api/v1/results* {
+    @results_paths path /api/v1/results /api/v1/results/*
+    handle @results_paths {
         reverse_proxy results-service:8080
     }
 
     # Elections Service
-    handle /api/v1/elections* {
+    @elections_paths path /api/v1/elections /api/v1/elections/*
+    handle @elections_paths {
         reverse_proxy elections-query-service:8080
     }
 
