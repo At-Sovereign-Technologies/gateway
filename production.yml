@@ -109,3 +109,5 @@ volumes:
 networks:
   sello-net:
     driver: overlay
+    driver_opts:
+      com.docker.network.driver.mtu: "1400"
