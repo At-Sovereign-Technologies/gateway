@@ -79,7 +79,10 @@ services:
             KC_HTTP_RELATIVE_PATH: /auth
             KC_HOSTNAME_PATH: /auth
             KC_PROXY_HEADERS: xforwarded
+            KC_PROXY: passthrough
             KC_HTTP_ENABLED: "true"
+            KC_HOSTNAME_STRICT: "false"
+            
         networks:
             - sello-net
         deploy:
