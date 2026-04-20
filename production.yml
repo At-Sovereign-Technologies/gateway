@@ -297,6 +297,7 @@ volumes:
   results_data:
   elections_query_data:
   transparency_data:
+  keycloak_data:
 
 networks:
   sello-net:
