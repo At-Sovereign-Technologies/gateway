@@ -60,7 +60,7 @@ services:
                 - node.role == manager
 
     keycloak:
-        image: quay.io/keycloak/keycloak:latest
+        image: quay.io/keycloak/keycloak:26.6.1
         command: start-dev
         environment:
             KC_DB: ${KEYCLOAK_DB}
