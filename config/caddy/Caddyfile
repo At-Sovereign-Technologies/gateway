@@ -35,6 +35,10 @@
         reverse_proxy tasks.transparency-service:8080
     }
 
+    handle /keycloak {
+        reverse_proxy tasks.keycloak:8080
+    }
+
 
     # Catch the rest of the calls to prevent
     # endpoint issues. - Augusto
