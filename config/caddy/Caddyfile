@@ -39,7 +39,6 @@
         reverse_proxy tasks.keycloak:8080
     }
 
-
     # Catch the rest of the calls to prevent
     # endpoint issues. - Augusto
     handle /api/* {
