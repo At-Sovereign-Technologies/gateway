@@ -35,7 +35,7 @@
         reverse_proxy tasks.transparency-service:8080
     }
 
-    handle /keycloak {
+    handle /auth* {
         reverse_proxy tasks.keycloak:8080
     }
 

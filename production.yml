@@ -46,6 +46,8 @@ services:
         image: postgres:14
         environment:
             POSTGRES_DB: ${KEYCLOAK_DB:-keycloak}
+            POSTGRES_USER: ${KEYCLOAK_USERNAME}
+            POSTGRES_PASSWORD: ${KEYCLOAK_PASSWORD}
         volumes:
             - keycloak_data:/var/lib/postgresql/data
         networks:
@@ -62,10 +64,21 @@ services:
         image: quay.io/keycloak/keycloak:26.6.1
         command: start-dev
         environment:
+            # Database connection settings
             KC_DB: ${KEYCLOAK_DB:-keycloak}
             KC_DB_URL_HOST: keycloak-db
+            KC_DB_USERNAME: ${KEYCLOAK_USERNAME}
+            KC_DB_PASSWORD: ${KEYCLOAK_PASSWORD}
+
+            # Auth settings
             KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
             KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
+            # Reverse Proxy settings
+            KC_HTTP_RELATIVE_PATH: /auth
+            KC_HOSTNAME_PATH: /auth
+            KC_PROXY_HEADERS: xforwarded
+            KC_HTTP_ENABLED: "true"
         networks:
             - sello-net
         deploy:
