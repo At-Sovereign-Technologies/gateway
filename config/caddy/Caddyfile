@@ -35,14 +35,19 @@
         reverse_proxy tasks.transparency-service:8080
     }
 
-    handle /auth* {
-        reverse_proxy tasks.keycloak:8080
-    }
-
     # Catch the rest of the calls to prevent
     # endpoint issues. - Augusto
     handle /api/* {
         respond "Forbidden" 403
+    }
+
+    # Keycloak configuration
+    handle /auth* {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+        reverse_proxy tasks.keycloak:8080
     }
 
     # Frontend
