@@ -1,20 +1,5 @@
 import snippets/*.conf
 
-:80 {
-    # Authorization
-    handle /authelia* {
-        reverse_proxy authelia:9091
-    }
-
-    # API Routes
-    import api_routes.conf
-
-    # Frontend
-    handle {
-        reverse_proxy frontend:80
-    }
-}
-
 ciudadano.sello-legitimo.site {
     import ciudadano/*
 }
