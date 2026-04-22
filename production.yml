@@ -46,7 +46,7 @@ services:
         image: authelia/authelia:latest
         container_name: authelia
         volumes:
-            - ./config:/config
+            - ./config/authelia:/config
         networks:
             - sello-net
         environment:
