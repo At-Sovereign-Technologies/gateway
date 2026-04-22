@@ -32,15 +32,15 @@ session:
   name: authelia_session
   secret: "unsecure_session_secret_change_me"
   cookies:
-    - domain: marlee-harmonious-nontentatively.ngrok-free.dev
-      authelia_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/authelia
-      default_redirection_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/
+    - domain: https://sello-legitimo.site/
+      authelia_url: https://auth.sello-legitimo.site/
+      default_redirection_url: https://sello-legitimo.site/
 
 # REQUIRED: You must have at least one rule if policy is 'deny'
 access_control:
   default_policy: deny
   rules:
-    - domain: marlee-harmonious-nontentatively.ngrok-free.dev
+    - domain: auth.sello-legitimo.site
       policy: one_factor
 
 # REQUIRED: Notifier must be defined

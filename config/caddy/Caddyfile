@@ -14,3 +14,13 @@ import snippets/*.conf
         reverse_proxy frontend:80
     }
 }
+
+ciudadano.sello-legitimo.site {
+    import ciudadano/*
+}
+
+auth.sello-legitimo.site {
+    reverse_proxy authelia:9091 {
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
