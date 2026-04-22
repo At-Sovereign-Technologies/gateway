@@ -1,5 +1,9 @@
 import snippets/*.conf
 
+{
+    auto_https disable_redirects
+}
+
 ciudadano.sello-legitimo.site {
     import ciudadano/*
 }
