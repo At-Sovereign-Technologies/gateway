@@ -68,14 +68,11 @@ session:
   secret: 'CAMBIAR_EN_PRODUCCION_secreto_sesion_minimo_64_caracteres_aqui_0000'
   cookies:
     - name: 'authelia_session'
-      domain: '127.0.0.1'
+      domain: 'https://auth.sello-legitimo.site'
       authelia_url: 'https://auth.sello-legitimo.site'
       expiration: '1 hour'
       inactivity: '30 minutes'
-  redis:
-    host: 'authelia-redis'
-    port: 6379
-
+      
 ##
 ## Regulacion — proteccion ante fuerza bruta
 ##
