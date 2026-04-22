@@ -244,7 +244,7 @@ services:
                     - node.labels.type == storage
 
     election-conf-service:
-        image: ghcr.io/at-sovereign-technologies/transparency-service:latest
+        image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:latest
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://election-conf-postgres:5432/${ELECTION_CONF_SVC_DB_NAME}
