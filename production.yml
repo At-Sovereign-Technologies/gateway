@@ -43,6 +43,7 @@ services:
         image: authelia/authelia:latest
         volumes:
             - ./config/authelia/configuration.yml:/config/configuration.yml:ro
+            - ./config/authelia/users_database.yml:/config/users_database.yml:ro
         networks:
             - sello-net
         environment:
