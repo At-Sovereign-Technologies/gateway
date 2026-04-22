@@ -12,7 +12,7 @@ services:
         ports:
             - 8181:80
         volumes:
-            - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
+            - ./config/caddy:/etc/caddy
         networks:
             - sello-net
         deploy:
