@@ -8,7 +8,7 @@ http://ciudadano.sello-legitimo.site {
     import ciudadano/*
 }
 
-http://auth.sello-legitimo.site {
+http://registraduria.sello-legitimo.site {
     import registraduria/*
 }
 
