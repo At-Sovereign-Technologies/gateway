@@ -10,10 +10,11 @@ theme: 'light'
 ##
 server:
   address: 'tcp://:9091/'
-  tls:
-    key: '/config/certs/server.key'
-    certificate: '/config/certs/server.crt'
-
+  cookies:
+    - name: 'authelia_session'
+      domain: 'sello-legitimo.site' # Dominio principal para que funcione en subdominios
+      authelia_url: 'https://auth.sello-legitimo.site'
+      default_redirection_url: 'https://eleccion.sello-legitimo.site'
 ##
 ## Logs
 ##
