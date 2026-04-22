@@ -26,27 +26,6 @@ services:
                     cpus: "0.50"   # half a CPU core
                     memory: 512M
 
-    authelia:
-        image: authelia/authelia:latest
-        volumes:
-            - ./config/authelia:/config
-        networks:
-            - sello-net
-        environment:
-            - TZ=UTC-8
-        healthcheck:
-            test: ["CMD", "authelia-scripts", "healthcheck"]
-            interval: 30s
-            timeout: 3s
-            retries: 3
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.role == manager
-
     # Frontend
     frontend:
         image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:latest
