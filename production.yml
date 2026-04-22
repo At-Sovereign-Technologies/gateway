@@ -10,7 +10,7 @@ services:
     gateway:
         image: caddy:latest
         ports:
-            - 8181:80
+            - 3000:80
         volumes:
             - ./config/caddy:/etc/caddy
         networks:
@@ -25,22 +25,6 @@ services:
                 limits:
                     cpus: "0.50"   # half a CPU core
                     memory: 512M
-
-    ngrok:
-        image: ngrok/ngrok:latest
-        environment:
-            NGROK_AUTHTOKEN: ${GATEWAY_NGROK_AUTHTOKEN}
-        command:
-            - "http"
-            - "gateway:80"
-        networks:
-            - sello-net
-        deploy:
-            restart_policy:
-                condition: any
-            placement:
-                constraints:
-                    - node.role == manager
 
     authelia:
         image: authelia/authelia:latest
