@@ -1,3 +1,4 @@
+# Server configuration
 server:
   host: 0.0.0.0
   port: 9091
@@ -7,8 +8,46 @@ server:
       forward-auth:
         implementation: 'ForwardAuth'
 
+# Log level
+log:
+  level: info
+
+# Authentication and Storage
+authentication_backend:
+  password_reset:
+    disable: false
+  file:
+    path: /config/users_database.yml
+
+storage:
+  local:
+    path: /config/db.sqlite3
+
+# Access Control Rules
+access_control:
+  default_policy: deny
+  rules:
+    - domain: marlee-harmonious-nontentatively.ngrok-free.dev
+      policy: one_factor
+
+# Session configuration adapted for your Ngrok setup
 session:
+  name: authelia_session
+  secret: "unsecure_session_secret_change_me" # Replace with a random string
+  expiration: 1h
+  inactivity: 5m
   cookies:
     - domain: marlee-harmonious-nontentatively.ngrok-free.dev
       authelia_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/authelia
       default_redirection_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/
+
+# Security & Secrets
+jwt_secret: "unsecure_jwt_secret_change_me" # Replace with a random string
+
+# TOTP & Notifier
+totp:
+  issuer: Authelia
+
+notifier:
+  filesystem:
+    filename: /config/emails.txt
