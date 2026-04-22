@@ -32,7 +32,7 @@ services:
         networks:
             - sello-net
         deploy:
-            replicas: 2
+            replicas: 1
             restart_policy:
                 condition: on-failure
             placement:
@@ -243,6 +243,18 @@ services:
                 constraints:
                     - node.labels.type == storage
 
+    election-conf-frotnend:
+        image: ghcr.io/at-sovereign-technologies/frontend-configuracionelecciones:latest
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
+
     election-conf-service:
         image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:latest
         environment:
@@ -277,6 +289,18 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
+
+    preelectoral-frotnend:
+        image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:latest
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
 
     preelectoral-service:
         image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:latest
