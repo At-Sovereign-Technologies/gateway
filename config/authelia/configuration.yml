@@ -1,53 +1,55 @@
-# Server configuration
 server:
-  host: 0.0.0.0
-  port: 9091
-  base_path: /authelia
+  # Merged host, port, and path into the new address format
+  address: 'tcp://0.0.0.0:9091/authelia'
   endpoints:
     authz:
       forward-auth:
         implementation: 'ForwardAuth'
 
-# Log level
 log:
   level: info
 
-# Authentication and Storage
+# REQUIRED: This signs the password reset emails
+identity_validation:
+  reset_password:
+    jwt_secret: "generate_a_64_char_random_string_here"
+
+# REQUIRED: You must define a backend
 authentication_backend:
   password_reset:
     disable: false
   file:
     path: /config/users_database.yml
 
+# REQUIRED: You must provide an encryption key for the database
 storage:
+  encryption_key: "generate_another_64_char_random_string_here"
   local:
     path: /config/db.sqlite3
 
-# Access Control Rules
+# Updated for your Ngrok domain
+session:
+  name: authelia_session
+  secret: "unsecure_session_secret_change_me"
+  cookies:
+    - domain: marlee-harmonious-nontentatively.ngrok-free.dev
+      authelia_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/authelia
+      default_redirection_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/
+
+# REQUIRED: You must have at least one rule if policy is 'deny'
 access_control:
   default_policy: deny
   rules:
     - domain: marlee-harmonious-nontentatively.ngrok-free.dev
       policy: one_factor
 
-# Session configuration adapted for your Ngrok setup
-session:
-  name: authelia_session
-  secret: "unsecure_session_secret_change_me" # Replace with a random string
-  expiration: 1h
-  inactivity: 5m
-  cookies:
-    - domain: marlee-harmonious-nontentatively.ngrok-free.dev
-      authelia_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/authelia
-      default_redirection_url: https://marlee-harmonious-nontentatively.ngrok-free.dev/
-
-# Security & Secrets
-jwt_secret: "unsecure_jwt_secret_change_me" # Replace with a random string
-
-# TOTP & Notifier
-totp:
-  issuer: Authelia
-
+# REQUIRED: Notifier must be defined
 notifier:
   filesystem:
     filename: /config/emails.txt
+
+# Main JWT Secret
+jwt_secret: "unsecure_jwt_default_change_me"
+
+totp:
+  issuer: Authelia
