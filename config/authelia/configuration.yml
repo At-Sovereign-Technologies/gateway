@@ -49,7 +49,31 @@ identity_providers:
         key: |
           -----BEGIN PRIVATE KEY-----
           MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLXREahav5nRaJ
-          ... (tu clave privada actual aquí) ...
+          n9qjRFCsPPEv11PIHy68J3DX3pKxw4lhf6giZjAjbWXj3Oqeu2W4lLQZ7rIhENmg
+          D9c0VKawi/9D9MuGG/BdlCsnEAOK3ygQ+Yvoe3Q5FeFa9123I1klmKugpSwHH+8+
+          jCwaHR5i4+zKf6FBVK5a3VsXudMGUVf+3ulhx5y9C/Fej+q3+yW2qXI5p5fDHKZl
+          aoadgs1UhGH4H82k0rWayxiIg05Fe+qmlG1B+C+Gv5XagWv0qN0Jsgp7ixzM2EUt
+          nT7d6M+Q+LwD5qg3wbL2I7DAKz7NF2QjGVYWvaKN7VQsjtoIOWRz/yxnNDOQTfNw
+          UpQj5aa9AgMBAAECggEAXd3lSSKuEJdLkdaxKm8b9YRjpztytop+HebulRVtDJQ+
+          0zwDNW2JhrC2OQj9WqsQ9rPctaORoOWQLeth4Au6rP7RomJZlttKhUcg6/TeTblX
+          Ww50X6isKrVIwZ4wKZotScdAYPQccGVzHqHAsYUDQ44E/CsRGYCmwdYud7MUDnOm
+          wuob4sWaURBaMIo3YT42P0z0rDvcdG8nBLpcZ3AuoLDyNAgvafaJkzRUYK99qTKH
+          2lbpbeMT8vOs0nCkBSm4ZigfGY+IBcr5QI54WJ461UZ+u+tt88n7qkoA4MJJKfCb
+          OQf+lu5R4uKVRyZIQ+BcQIFOGYBxxC9+b2Xbt77aWQKBgQDe6y5BlgP4L7QjSFGW
+          sP8sxzVbmxL6MS5SSduxXINnzp/B/eZFNIT5HAxhZqrrSP/+aKenNNjsZ/CS9Hxq
+          mJA/kOBavlxx2RUkNaAEar4wV2LImjtV901/cZYBwkSxHX8rS2Au1vZ4DmpRaO2Q
+          tWxB6Pg+Tn+rt9cC3nt2LkIswwKBgQDpivl2c0gK7fc3gk9j0s5YYhBHOEK5OVh5
+          Rv6MqV97li3awHii6LrXv14ogiLfljwatlgeLRt0j1EAgtKyz0Kg0wLlQq+tqn/s
+          29PJaU+XmH5OP8KPrnQ9Xb7tX4je7U6v84nmczUOoNnsJ2BdXK46SEsInLQYxjmc
+          6m0v4xmmfwKBgQCu/iIOvGwbTZ90vxXFXObESRGa+u5311nMoUxEPCKvv+VrzRwS
+          IbttLtaNM6JjF6hWF+Pcf8D2PFX/lsuAholeTSXCNoOtn8NX7HzUWtM4cbELVv/T
+          aVK+A/XFJbL08vnci8xSmM9cybwucldj7Pex+ee+SbMxoxy3lN2IlaG/LwKBgQCo
+          k4Jid/BGw2KxlMRNn/sGXTK21euD29r7H73aNuAPS2YqAsiRf0BvP1luEBGwJreX
+          6ItOrOymhFTJ86S3IVhM0kPCzRIWX34bsMn9FqE3IgH55ZhBMoIBUcvheBZKJC2q
+          YDboO7zOpFjpV7r9aUryEwDmZIazY1Ju6+CIsnrvbQKBgF4NzGzKjR+m0KO5jqNx
+          mKNlWoeQvhLxwKaKL2Sf1c3Z4qoLGPBTgFMpMsNTJ6fHu5SQYYGi8TlcEf3UdqLu
+          Pcguj22zDldE4Frn4Z0gSu5PMWbX+HuSyih0wW6+6/CdksIHgnSnG4N0lzFCiJeF
+          aDemtTlOCXeT1kz7tBeDU7TX
           -----END PRIVATE KEY-----
     clients:
       - client_id: 'frontend-configuracion'
