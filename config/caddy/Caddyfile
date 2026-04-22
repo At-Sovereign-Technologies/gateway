@@ -14,7 +14,7 @@ http://preeleccion.sello-legitimo.site {
     }
 
     handle {
-        reverse_proxy election-conf-frotnend:80
+        reverse_proxy election-conf-frontend:80
     }
 }
 
@@ -24,7 +24,7 @@ http://eleccion.sello-legitimo.site {
     }
 
     handle {
-        reverse_proxy preelectoral-frotnend:80
+        reverse_proxy preelectoral-frontend:80
     }
 }
 

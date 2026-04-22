@@ -38,6 +38,27 @@ services:
             placement:
                 constraints:
                     - node.labels.type == frontend
+
+    authelia:
+        image: authelia/authelia:latest
+        volumes:
+            - ./config/authelia/configuration.yml:/config/configuration.yml:ro
+        networks:
+            - sello-net
+        environment:
+            - TZ=UTC-8
+        healthcheck:
+            test: ["CMD", "authelia-scripts", "healthcheck"]
+            interval: 30s
+            timeout: 3s
+            retries: 3
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.role == manager
     
     # Citizens Query
     citizen-query-service:
@@ -243,7 +264,7 @@ services:
                 constraints:
                     - node.labels.type == storage
 
-    election-conf-frotnend:
+    election-conf-frontend:
         image: ghcr.io/at-sovereign-technologies/frontend-configuracionelecciones:latest
         networks:
             - sello-net
@@ -290,7 +311,7 @@ services:
                 constraints:
                     - node.labels.type == storage
 
-    preelectoral-frotnend:
+    preelectoral-frontend:
         image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:latest
         networks:
             - sello-net

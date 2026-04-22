@@ -1,0 +1,225 @@
+﻿# yamllint disable rule:comments-indentation
+---
+
+
+## Tema de la interfaz de Authelia: light, dark, grey, auto.
+theme: 'light'
+
+##
+## Servidor
+##
+server:
+  address: 'tcp://:9091/'
+  tls:
+    key: '/config/certs/server.key'
+    certificate: '/config/certs/server.crt'
+
+##
+## Logs
+##
+log:
+  level: 'info'
+  format: 'text'
+
+##
+## TOTP (autenticacion de dos factores) — deshabilitado para un solo factor
+##
+totp:
+  disable: true
+
+##
+## Validacion de identidad
+##
+identity_validation:
+  reset_password:
+    jwt_secret: 'CAMBIAR_EN_PRODUCCION_jwt_reset_password_secreto_minimo_32_chars'
+
+##
+## Backend de autenticacion — base de datos de usuarios en archivo local
+##
+authentication_backend:
+  file:
+    path: '/config/users_database.yml'
+    password:
+      algorithm: 'argon2id'
+      iterations: 3
+      memory: 65536
+      parallelism: 4
+      key_length: 32
+      salt_length: 16
+
+##
+## Control de acceso
+##
+access_control:
+  default_policy: 'deny'
+  rules:
+    ## Todos los usuarios autenticados con un factor tienen acceso
+    - domain: 'localhost'
+      policy: 'one_factor'
+    - domain: '*'
+      policy: 'one_factor'
+
+##
+## Sesion
+##
+session:
+  secret: 'CAMBIAR_EN_PRODUCCION_secreto_sesion_minimo_64_caracteres_aqui_0000'
+  cookies:
+    - name: 'authelia_session'
+      domain: '127.0.0.1'
+      authelia_url: 'https://auth.sello-legitimo.site'
+      expiration: '1 hour'
+      inactivity: '30 minutes'
+  redis:
+    host: 'authelia-redis'
+    port: 6379
+
+##
+## Regulacion — proteccion ante fuerza bruta
+##
+regulation:
+  max_retries: 5
+  find_time: '2 minutes'
+  ban_time: '10 minutes'
+
+##
+## Almacenamiento
+##
+storage:
+  encryption_key: 'CAMBIAR_EN_PRODUCCION_clave_cifrado_almacenamiento_32_chars_00'
+  local:
+    path: '/config/db.sqlite3'
+
+
+
+##
+## Notificador — archivo local para desarrollo (sin SMTP)
+##
+notifier:
+  disable_startup_check: true
+  filesystem:
+    filename: '/config/notification.txt'
+
+##
+## Proveedores de identidad — OpenID Connect (OIDC)
+##
+identity_providers:
+  oidc:
+  
+    hmac_secret: 'CAMBIAR_EN_PRODUCCION_hmac_oidc_secreto_minimo_64_caracteres_000'
+
+    
+    jwks:
+      - key_id: 'sello-legitimo-key'
+        algorithm: 'RS256'
+        use: 'sig'
+        key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLXREahav5nRaJ
+          n9qjRFCsPPEv11PIHy68J3DX3pKxw4lhf6giZjAjbWXj3Oqeu2W4lLQZ7rIhENmg
+          D9c0VKawi/9D9MuGG/BdlCsnEAOK3ygQ+Yvoe3Q5FeFa9123I1klmKugpSwHH+8+
+          jCwaHR5i4+zKf6FBVK5a3VsXudMGUVf+3ulhx5y9C/Fej+q3+yW2qXI5p5fDHKZl
+          aoadgs1UhGH4H82k0rWayxiIg05Fe+qmlG1B+C+Gv5XagWv0qN0Jsgp7ixzM2EUt
+          nT7d6M+Q+LwD5qg3wbL2I7DAKz7NF2QjGVYWvaKN7VQsjtoIOWRz/yxnNDOQTfNw
+          UpQj5aa9AgMBAAECggEAXd3lSSKuEJdLkdaxKm8b9YRjpztytop+HebulRVtDJQ+
+          0zwDNW2JhrC2OQj9WqsQ9rPctaORoOWQLeth4Au6rP7RomJZlttKhUcg6/TeTblX
+          Ww50X6isKrVIwZ4wKZotScdAYPQccGVzHqHAsYUDQ44E/CsRGYCmwdYud7MUDnOm
+          wuob4sWaURBaMIo3YT42P0z0rDvcdG8nBLpcZ3AuoLDyNAgvafaJkzRUYK99qTKH
+          2lbpbeMT8vOs0nCkBSm4ZigfGY+IBcr5QI54WJ461UZ+u+tt88n7qkoA4MJJKfCb
+          OQf+lu5R4uKVRyZIQ+BcQIFOGYBxxC9+b2Xbt77aWQKBgQDe6y5BlgP4L7QjSFGW
+          sP8sxzVbmxL6MS5SSduxXINnzp/B/eZFNIT5HAxhZqrrSP/+aKenNNjsZ/CS9Hxq
+          mJA/kOBavlxx2RUkNaAEar4wV2LImjtV901/cZYBwkSxHX8rS2Au1vZ4DmpRaO2Q
+          tWxB6Pg+Tn+rt9cC3nt2LkIswwKBgQDpivl2c0gK7fc3gk9j0s5YYhBHOEK5OVh5
+          Rv6MqV97li3awHii6LrXv14ogiLfljwatlgeLRt0j1EAgtKyz0Kg0wLlQq+tqn/s
+          29PJaU+XmH5OP8KPrnQ9Xb7tX4je7U6v84nmczUOoNnsJ2BdXK46SEsInLQYxjmc
+          6m0v4xmmfwKBgQCu/iIOvGwbTZ90vxXFXObESRGa+u5311nMoUxEPCKvv+VrzRwS
+          IbttLtaNM6JjF6hWF+Pcf8D2PFX/lsuAholeTSXCNoOtn8NX7HzUWtM4cbELVv/T
+          aVK+A/XFJbL08vnci8xSmM9cybwucldj7Pex+ee+SbMxoxy3lN2IlaG/LwKBgQCo
+          k4Jid/BGw2KxlMRNn/sGXTK21euD29r7H73aNuAPS2YqAsiRf0BvP1luEBGwJreX
+          6ItOrOymhFTJ86S3IVhM0kPCzRIWX34bsMn9FqE3IgH55ZhBMoIBUcvheBZKJC2q
+          YDboO7zOpFjpV7r9aUryEwDmZIazY1Ju6+CIsnrvbQKBgF4NzGzKjR+m0KO5jqNx
+          mKNlWoeQvhLxwKaKL2Sf1c3Z4qoLGPBTgFMpMsNTJ6fHu5SQYYGi8TlcEf3UdqLu
+          Pcguj22zDldE4Frn4Z0gSu5PMWbX+HuSyih0wW6+6/CdksIHgnSnG4N0lzFCiJeF
+          aDemtTlOCXeT1kz7tBeDU7TX
+          -----END PRIVATE KEY-----
+
+    ## CORS para que los frontends SPA puedan llamar al token endpoint
+    cors:
+      endpoints:
+        - 'authorization'
+        - 'token'
+        - 'revocation'
+        - 'userinfo'
+        - 'introspection'
+      allowed_origins_from_client_redirect_uris: true
+
+    ## Duracion de los tokens
+    lifespans:
+      access_token: '1 hour'
+      authorize_code: '1 minute'
+      id_token: '1 hour'
+      refresh_token: '90 minutes'
+
+    ## Politicas por cliente OIDC para controlar acceso por usuario/grupo
+    authorization_policies:
+      frontend_config_policy:
+        default_policy: 'deny'
+        rules:
+          - policy: 'one_factor'
+            subject:
+              - 'group:frontend-configuracion'
+      frontend_gestion_pre_policy:
+        default_policy: 'deny'
+        rules:
+          - policy: 'one_factor'
+            subject:
+              - 'group:frontend-gestion-pre'
+
+    ## Clientes OIDC registrados (frontends SPA — flujo Authorization Code + PKCE)
+    clients:
+      ## ─── Frontend Configuracion Eleccion (puerto 5173) ────────────────
+      - client_id: 'frontend-configuracion'
+        client_name: 'Frontend Configuracion Eleccion'
+        ## Cliente publico (SPA) — usa PKCE, sin client_secret
+        public: true
+        authorization_policy: 'frontend_config_policy'
+        redirect_uris:
+          - 'https://eleccion.sello-legitimo.site/callback'
+          - 'https://preeleccion.sello-legitimo.site/callback'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        response_types:
+          - 'code'
+        grant_types:
+          - 'authorization_code'
+        pkce_challenge_method: 'S256'
+        access_token_signed_response_alg: 'RS256'
+        id_token_signed_response_alg: 'RS256'
+        token_endpoint_auth_method: 'none'
+        consent_mode: 'implicit'
+
+      ## ─── Frontend Gestion Pre-Electoral (puerto 5174) ─────────────────
+      - client_id: 'frontend-gestion-pre'
+        client_name: 'Frontend Gestion Pre-Electoral'
+        public: true
+        authorization_policy: 'frontend_gestion_pre_policy'
+        redirect_uris:
+          - 'http://localhost:5174/callback'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        response_types:
+          - 'code'
+        grant_types:
+          - 'authorization_code'
+        pkce_challenge_method: 'S256'
+        access_token_signed_response_alg: 'RS256'
+        id_token_signed_response_alg: 'RS256'
+        token_endpoint_auth_method: 'none'
+        consent_mode: 'implicit'
