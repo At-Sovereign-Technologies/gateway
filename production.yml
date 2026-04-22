@@ -246,7 +246,7 @@ services:
     election-conf-service:
         image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:latest
         environment:
-            PORT: 8080
+            PORT: 8081
             DB_URL: jdbc:postgresql://election-conf-postgres:5432/${ELECTION_CONF_SVC_DB_NAME}
             DB_USERNAME: ${ELECTION_CONF_SVC_DB_USER}
             DB_PASSWORD: ${ELECTION_CONF_SVC_DB_PASSWORD}
@@ -278,6 +278,40 @@ services:
                 constraints:
                     - node.labels.type == storage
 
+    preelectoral-service:
+        image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:latest
+        environment:
+            PUERTO: 8080
+            DB_URL: jdbc:postgresql://preelectoral-postgres:5432/${PREELECTORAL_SVC_DB_NAME}
+            DB_USUARIO: ${PREELECTORAL_SVC_DB_USER}
+            DB_CLAVE: ${PREELECTORAL_SVC_DB_PASSWORD}
+        networks:
+            - sello-net
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+
+    preelectoral-postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: ${PREELECTORAL_SVC_DB_NAME}
+            POSTGRES_USER: ${PREELECTORAL_SVC_DB_USER}
+            POSTGRES_PASSWORD: ${PREELECTORAL_SVC_DB_PASSWORD}
+        volumes:
+            - preelectoral_data:/var/lib/postgresql/data
+        networks:
+            - sello-net
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
 
 volumes:
     citizen_query_data:
@@ -285,6 +319,7 @@ volumes:
     elections_query_data:
     transparency_data:
     election_conf_data:
+    preelectoral_data:
 
 networks:
   sello-net:
