@@ -9,6 +9,10 @@ http://ciudadano.sello-legitimo.site {
 }
 
 http://auth.sello-legitimo.site {
+    import registraduria/*
+}
+
+http://auth.sello-legitimo.site {
     reverse_proxy authelia:9091 {
         header_up X-Forwarded-Proto {scheme}
     }
