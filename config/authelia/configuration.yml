@@ -35,4 +35,6 @@ notifier:
   
 identity_validation:
   reset_password:
-    disable: true
+    jwt_secret: '8536ba492aebd4e3164c1bbf3556cd5e0730ce3e1144e1a4d188698e1201889e1d600b8cf4d1495b19cb266e4261a2d392acc4d4ad58644df1eda1d968d163ae'
+    jwt_lifespan: '5 minutes'
+    jwt_algorithm: 'HS256'
