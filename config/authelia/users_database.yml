@@ -1,21 +1,9 @@
----
-###############################################################################
-##        Authelia — Base de datos de usuarios (desarrollo)                  ##
-##                                                                           ##
-##  IMPORTANTE: Este archivo es para desarrollo local.                       ##
-##  En producción usar LDAP o gestión externa de usuarios.                   ##
-##                                                                           ##
-##  Para generar el hash de contraseña con Argon2id:                         ##
-##    docker run --rm authelia/authelia:latest \                             ##
-##      authelia crypto hash generate argon2 --password 'TuContraseña'      ##
-###############################################################################
-
 users:
   registraduria:
     displayname: 'Usuario Registraduria'
     ## Contrasena: 12345
     password: '$argon2id$v=19$m=65536,t=3,p=4$UoUfL39JzW1IFH5vdnbBlA$jk56H7YjZvWV7ngdXHURPJo2JdhudNHrX0X7uo+UPnc'
-    email: 'registraduria@registraduria.gov.co'
+    email: 'registraduria@sello-legitimo.site'
     groups:
       - 'frontend-configuracion'
       - 'frontend-gestion-pre'
@@ -24,6 +12,7 @@ users:
     displayname: 'Superadmin'
     ## Contrasena: 12345
     password: '$argon2id$v=19$m=65536,t=3,p=4$UoUfL39JzW1IFH5vdnbBlA$jk56H7YjZvWV7ngdXHURPJo2JdhudNHrX0X7uo+UPnc'
-    email: 'superadmin@registraduria.gov.co'
+    email: 'superadmin@sello-legitimo.site'
     groups:
       - 'frontend-configuracion'
+      - 'frontend-gestion-pre'
