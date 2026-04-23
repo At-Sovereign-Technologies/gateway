@@ -2,6 +2,7 @@ import snippets/*.conf
 
 {
     auto_https disable_redirects
+    local_certs
 }
 
 import auth/*.conf
