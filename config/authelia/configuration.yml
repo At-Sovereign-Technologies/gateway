@@ -19,7 +19,10 @@ access_control:
 
 session:
   secret: '0f59c7b2215a1436be06e590cac17aa4e6d686ebd8f99a9ec16d8555cfa1ea9923eafa752e64eaa37639892a9c45e3dfaf246bc57907930c6175d81ea952cb09'
-  domain: 'sello-legitimo.site'
+  cookies:
+      - domain: 'sello-legitimo.site'
+        authelia_url: 'https://auth.sello-legitimo.site'
+        default_redirection_url: 'https://registraduria.sello-legitimo.site'
 
 storage:
   encryption_key: 'e3969e04350c169b1bf4ad7cd786b814c5003c317ba726879400fc6388f78edb'
@@ -29,3 +32,7 @@ storage:
 notifier:
   filesystem:
     filename: '/config/emails.txt'
+  
+identity_validation:
+  reset_password:
+    disable: true
