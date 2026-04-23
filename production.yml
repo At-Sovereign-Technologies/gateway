@@ -10,7 +10,7 @@ services:
     gateway:
         image: caddy:latest
         ports:
-            - 3000:80
+            - 3000:443
         volumes:
             - ./config/caddy:/etc/caddy
         networks:
