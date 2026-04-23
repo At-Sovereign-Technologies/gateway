@@ -1,3 +1,4 @@
+echo "Prunning volumes..."
 docker service create \
   --name cluster-pruner \
   --mode global \
