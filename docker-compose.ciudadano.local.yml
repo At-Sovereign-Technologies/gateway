@@ -4,7 +4,7 @@ services:
     image: caddy:2.8.4
     container_name: gateway
     ports:
-      - "8091:443"
+      - "8092:443"
     volumes:
       - ./config/caddy:/etc/caddy:ro
       - caddy_data:/data
