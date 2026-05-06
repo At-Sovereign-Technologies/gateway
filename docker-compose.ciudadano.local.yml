@@ -176,6 +176,16 @@ services:
     networks:
       - sello-net
 
+  dashboards-rol-service:
+    image: ghcr.io/at-sovereign-technologies/m4-site-dashboards-rol-service:latest
+    container_name: dashboards-rol-service
+    environment:
+      SERVER_PORT: 8085
+    ports:
+      - "8085:8085"
+    networks:
+      - sello-net
+
 volumes:
   caddy_data:
   caddy_config:
