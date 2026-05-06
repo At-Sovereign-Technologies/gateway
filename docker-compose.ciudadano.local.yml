@@ -2,6 +2,7 @@ services:
 
   gateway:
     image: caddy:2.8.4
+    container_name: gateway
     ports:
       - "8091:443"
     volumes:
@@ -30,23 +31,31 @@ services:
       DB_PASSWORD: postgres
       REDIS_HOST: citizen-redis
       REDIS_PORT: 6379
+    depends_on:
+      - citizen-postgres
+      - citizen-redis
     networks:
       - sello-net
 
   citizen-postgres:
     image: postgres:15
+    container_name: citizen-postgres
     environment:
       POSTGRES_DB: citizen_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"
+      - "5443:5432"
+    volumes:
+      - citizen_data:/var/lib/postgresql/data
     networks:
       - sello-net
 
   citizen-redis:
     image: redis:latest
     container_name: citizen-redis
+    ports:
+      - "6380:6379"
     networks:
       - sello-net
 
@@ -55,6 +64,37 @@ services:
       context: ../results-service
       dockerfile: Dockerfile
     container_name: results-service
+    environment:
+      DB_URL: jdbc:postgresql://results-postgres:5432/results_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      REDIS_HOST: results-redis
+      REDIS_PORT: 6379
+    depends_on:
+      - results-postgres
+      - results-redis
+    networks:
+      - sello-net
+
+  results-postgres:
+    image: postgres:15
+    container_name: results-postgres
+    environment:
+      POSTGRES_DB: results_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5444:5432"
+    volumes:
+      - results_data:/var/lib/postgresql/data
+    networks:
+      - sello-net
+
+  results-redis:
+    image: redis:latest
+    container_name: results-redis
+    ports:
+      - "6381:6379"
     networks:
       - sello-net
 
@@ -63,6 +103,37 @@ services:
       context: ../election-query-service
       dockerfile: Dockerfile
     container_name: elections-query-service
+    environment:
+      DB_URL: jdbc:postgresql://elections-postgres:5432/elections_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      REDIS_HOST: elections-redis
+      REDIS_PORT: 6379
+    depends_on:
+      - elections-postgres
+      - elections-redis
+    networks:
+      - sello-net
+
+  elections-postgres:
+    image: postgres:15
+    container_name: elections-postgres
+    environment:
+      POSTGRES_DB: elections_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5445:5432"
+    volumes:
+      - elections_data:/var/lib/postgresql/data
+    networks:
+      - sello-net
+
+  elections-redis:
+    image: redis:latest
+    container_name: elections-redis
+    ports:
+      - "6382:6379"
     networks:
       - sello-net
 
@@ -71,12 +142,47 @@ services:
       context: ../transparency-service
       dockerfile: Dockerfile
     container_name: transparency-service
+    environment:
+      DB_URL: jdbc:postgresql://transparency-postgres:5432/transparency_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      REDIS_HOST: transparency-redis
+      REDIS_PORT: 6379
+    depends_on:
+      - transparency-postgres
+      - transparency-redis
+    networks:
+      - sello-net
+
+  transparency-postgres:
+    image: postgres:15
+    container_name: transparency-postgres
+    environment:
+      POSTGRES_DB: transparency_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5446:5432"
+    volumes:
+      - transparency_data:/var/lib/postgresql/data
+    networks:
+      - sello-net
+
+  transparency-redis:
+    image: redis:latest
+    container_name: transparency-redis
+    ports:
+      - "6383:6379"
     networks:
       - sello-net
 
 volumes:
   caddy_data:
   caddy_config:
+  citizen_data:
+  results_data:
+  elections_data:
+  transparency_data:
 
 networks:
   sello-net:
