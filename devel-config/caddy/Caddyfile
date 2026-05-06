@@ -1,7 +1,6 @@
-ciudadano.sello-legitimo.site {
-
-    tls internal
-
-    import backend.conf
-    import frontend.conf
+{
+    auto_https disable_redirects
+    local_certs
 }
+
+import ciudadano/*.conf
