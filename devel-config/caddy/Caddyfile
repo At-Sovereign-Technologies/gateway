@@ -1,0 +1,7 @@
+ciudadano.sello-legitimo.site {
+
+    tls internal
+
+    import backend.conf
+    import frontend.conf
+}
