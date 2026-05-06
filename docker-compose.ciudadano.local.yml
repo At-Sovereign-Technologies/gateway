@@ -177,7 +177,9 @@ services:
       - sello-net
 
   dashboards-rol-service:
-    image: ghcr.io/at-sovereign-technologies/m4-site-dashboards-rol-service:latest
+    build:
+      context: ../M4-SITE-Dashboards-Rol-Service
+      dockerfile: Dockerfile
     container_name: dashboards-rol-service
     environment:
       SERVER_PORT: 8085
