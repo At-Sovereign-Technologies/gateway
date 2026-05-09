@@ -35,6 +35,18 @@ services:
             placement:
                 constraints:
                     - node.role == manager
+    
+    adminer:
+        image: adminer:latest
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.role == manager
 
     postgres:
         image: postgres:14
