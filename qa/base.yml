@@ -52,7 +52,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     redis:
         image: redis:7.2
@@ -68,7 +68,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == storage
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
 configs:
     caddy-config-prod:

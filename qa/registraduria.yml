@@ -10,7 +10,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == frontend
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sr-pre-elections-frontend:
         image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:devel
@@ -23,7 +23,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == frontend
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sr-elections-service:
         image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:devel
@@ -41,7 +41,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sr-pre-elections-service:
         image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:devel
@@ -59,4 +59,4 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
