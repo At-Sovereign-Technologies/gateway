@@ -29,9 +29,9 @@ services:
         image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:latest
         environment:
             PORT: 8081
-            DB_URL: jdbc:postgresql://postgres:5432/${ELECTION_CONF_SVC_DB_NAME}
-            DB_USERNAME: ${ELECTION_CONF_SVC_DB_USER}
-            DB_PASSWORD: ${ELECTION_CONF_SVC_DB_PASSWORD}
+            DB_URL: jdbc:postgresql://postgres:5432/${SR_ELECTIONS_DB_NAME}
+            DB_USERNAME: ${SR_ELECTIONS_DB_USER}
+            DB_PASSWORD: ${SR_ELECTIONS_DB_PASSWORD}
         networks:
             - sello-net-prod
         deploy:
@@ -47,9 +47,9 @@ services:
         image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:latest
         environment:
             PUERTO: 8080
-            DB_URL: jdbc:postgresql://postgres:5432/${PREELECTORAL_SVC_DB_NAME}
-            DB_USUARIO: ${PREELECTORAL_SVC_DB_USER}
-            DB_CLAVE: ${PREELECTORAL_SVC_DB_PASSWORD}
+            DB_URL: jdbc:postgresql://postgres:5432/${SR_PRE_ELECTIONS_DB_NAME}
+            DB_USUARIO: ${SR_PRE_ELECTIONS_DB_USER}
+            DB_CLAVE: ${SR_PRE_ELECTIONS_DB_PASSWORD}
         networks:
             - sello-net-prod
         deploy:

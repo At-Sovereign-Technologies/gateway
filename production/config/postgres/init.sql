@@ -1,23 +1,23 @@
 -- Citizens Query
-CREATE USER citizens_query_user WITH PASSWORD 'REPLACE_WITH_CITIZENS_QUERY_DB_PASSWORD';
-CREATE DATABASE citizens_query_db OWNER citizens_query_user;
+CREATE USER sc_citizen_user WITH PASSWORD '123456';
+CREATE DATABASE sc_citizen_db OWNER sc_citizen_user;
 
 -- Results Service
-CREATE USER results_svc_user WITH PASSWORD 'REPLACE_WITH_RESULTS_SVC_DB_PASSWORD';
-CREATE DATABASE results_svc_db OWNER results_svc_user;
+CREATE USER sc_results_user WITH PASSWORD '123456';
+CREATE DATABASE sc_results_db OWNER sc_results_user;
 
 -- Elections Query
-CREATE USER elections_query_user WITH PASSWORD 'REPLACE_WITH_ELECTIONS_QUERY_DB_PASSWORD';
-CREATE DATABASE elections_query_db OWNER elections_query_user;
+CREATE USER sc_elections_user WITH PASSWORD '123456';
+CREATE DATABASE sc_elections_db OWNER sc_elections_user;
 
 -- Transparency Service
-CREATE USER transparency_svc_user WITH PASSWORD 'REPLACE_WITH_TRANSPARENCY_SVC_DB_PASSWORD';
-CREATE DATABASE transparency_svc_db OWNER transparency_svc_user;
+CREATE USER sc_transparency_user WITH PASSWORD '123456';
+CREATE DATABASE sc_transparency_db OWNER sc_transparency_user;
 
 -- Election Configuration Service
-CREATE USER election_conf_svc_user WITH PASSWORD 'REPLACE_WITH_ELECTION_CONF_SVC_DB_PASSWORD';
-CREATE DATABASE election_conf_svc_db OWNER election_conf_svc_user;
+CREATE USER sc_elections_user WITH PASSWORD '123456';
+CREATE DATABASE sr_elections_db OWNER sc_elections_user;
 
 -- Pre-electoral Service
-CREATE USER preelectoral_svc_user WITH PASSWORD 'REPLACE_WITH_PREELECTORAL_SVC_DB_PASSWORD';
-CREATE DATABASE preelectoral_svc_db OWNER preelectoral_svc_user;
+CREATE USER sr_pre_elections_user WITH PASSWORD '123456';
+CREATE DATABASE sr_pre_elections_db OWNER sr_pre_elections_user;
