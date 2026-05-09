@@ -1,0 +1,7 @@
+adminer.sello-legitimo.site {
+    tls internal
+    
+    reverse_proxy adminer:8080 {
+        header_up X-Forwarded-Proto {scheme}
+    }
+}

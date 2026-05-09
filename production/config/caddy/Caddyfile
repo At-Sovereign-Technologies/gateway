@@ -6,5 +6,6 @@ import snippets/*.conf
 }
 
 import auth/*.conf
+import misc/*.conf
 import ciudadano/*.conf
 import registraduria/*.conf
