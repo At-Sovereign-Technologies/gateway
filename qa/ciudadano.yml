@@ -10,7 +10,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == frontend
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sc-elections-service:
         image: ghcr.io/at-sovereign-technologies/election-query-service:devel
@@ -31,7 +31,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sc-citizens-service:
         image: ghcr.io/at-sovereign-technologies/citizen-query-service:devel
@@ -52,7 +52,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sc-results-service:
         image: ghcr.io/at-sovereign-technologies/results-service:devel
@@ -73,7 +73,7 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
 
     sc-transparency-service:
         image: ghcr.io/at-sovereign-technologies/transparency-service:devel
@@ -94,4 +94,4 @@ services:
             placement:
                 constraints:
                     - node.labels.type == microservices
-                    - node.labels.env == prod
+                    - node.labels.env == qa
