@@ -1,0 +1,84 @@
+services:
+    gateway:
+        image: caddy:2.8
+        ports:
+            - 3000:443
+        volumes:
+            - ./config/caddy:/etc/caddy
+        networks:
+            - sello-net-prod
+        deploy:            
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                  - node.role == manager
+            resources:
+                limits:
+                    cpus: "0.50"
+                    memory: 512M
+
+    authelia:
+        image: authelia/authelia:4
+        volumes:
+            - ./config/authelia/configuration.yml:/config/configuration.yml:ro
+            - ./config/authelia/users_database.yml:/config/users_database.yml:ro
+        networks:
+            - sello-net-prod
+        environment:
+            - TZ=UTC-8
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.role == manager
+
+    postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+                    - node.labels.env == prod
+
+    redis:
+        image: redis:7.2
+        command: redis-server --appendonly yes
+        volumes:
+            - redis_data:/data
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == storage
+                    - node.labels.env == prod
+
+configs:
+    postgres-init:
+        external: true
+
+volumes:
+    postgres_data:
+    redis_data:
+
+networks:
+    sello-net-prod:
+        driver: overlay
+        driver_opts:
+            com.docker.network.driver.mtu: "1400"

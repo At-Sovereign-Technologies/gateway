@@ -1,0 +1,97 @@
+services:
+    sc-frontend:
+        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:latest
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
+                    - node.labels.env == prod
+
+    sc-elections-service:
+        image: ghcr.io/at-sovereign-technologies/election-query-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${ELECTIONS_QUERY_DB_NAME}
+            DB_USER: ${ELECTIONS_QUERY_DB_USER}
+            DB_PASSWORD: ${ELECTIONS_QUERY_DB_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            REDIS_DB: 2
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
+
+    sc-citizens-service:
+        image: ghcr.io/at-sovereign-technologies/citizen-query-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${CITIZENS_QUERY_DB_NAME}
+            DB_USER: ${CITIZENS_QUERY_DB_USER}
+            DB_PASSWORD: ${CITIZENS_QUERY_DB_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            REDIS_DB: 0
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 2
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
+
+    sc-results-service:
+        image: ghcr.io/at-sovereign-technologies/results-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${RESULTS_SVC_DB_NAME}
+            DB_USER: ${RESULTS_SVC_DB_USER}
+            DB_PASSWORD: ${RESULTS_SVC_DB_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            REDIS_DB: 1
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
+
+    sc-transparency-service:
+        image: ghcr.io/at-sovereign-technologies/transparency-service:latest
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${TRANSPARENCY_SVC_DB_NAME}
+            DB_USER: ${TRANSPARENCY_SVC_DB_USER}
+            DB_PASSWORD: ${TRANSPARENCY_SVC_DB_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            REDIS_DB: 3
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
