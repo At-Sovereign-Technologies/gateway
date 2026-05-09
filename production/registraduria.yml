@@ -12,7 +12,7 @@ services:
                     - node.labels.type == frontend
                     - node.labels.env == prod
 
-    sr-pre-election-frontend:
+    sr-pre-elections-frontend:
         image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:latest
         networks:
             - sello-net-prod
@@ -43,7 +43,7 @@ services:
                     - node.labels.type == microservices
                     - node.labels.env == prod
 
-    sr-pre-election-service:
+    sr-pre-elections-service:
         image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:latest
         environment:
             PUERTO: 8080
