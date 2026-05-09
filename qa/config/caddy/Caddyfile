@@ -3,7 +3,7 @@
     local_certs
 }
 
-adminer.sello-legitimo.site {
+adminer.qa.sello-legitimo.site {
     tls internal
     
     reverse_proxy adminer:8080 {
@@ -11,7 +11,7 @@ adminer.sello-legitimo.site {
     }
 }
 
-ciudadano.sello-legitimo.site {
+ciudadano.qa.sello-legitimo.site {
     tls internal
 
 	# Citizens Service
@@ -61,7 +61,7 @@ ciudadano.sello-legitimo.site {
 	}
 }
 
-preeleccion.sello-legitimo.site {
+preeleccion.qa.sello-legitimo.site {
     tls internal
 
     handle /api/* {
@@ -73,7 +73,7 @@ preeleccion.sello-legitimo.site {
     }
 }
 
-eleccion.sello-legitimo.site {
+eleccion.qa.sello-legitimo.site {
     tls internal
 
     handle /api/* {

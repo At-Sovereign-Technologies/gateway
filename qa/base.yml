@@ -2,7 +2,7 @@ services:
     gateway:
         image: caddy:2.8
         ports:
-            - 3000:443
+            - 4000:443
         configs:
             - source: caddy-config-prod
               target: /etc/caddy/Caddyfile
