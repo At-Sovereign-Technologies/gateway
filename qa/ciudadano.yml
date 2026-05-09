@@ -1,8 +1,8 @@
 services:
     sc-frontend:
-        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:stable
+        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:devel
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -13,7 +13,7 @@ services:
                     - node.labels.env == prod
 
     sc-elections-service:
-        image: ghcr.io/at-sovereign-technologies/election-query-service:stable
+        image: ghcr.io/at-sovereign-technologies/election-query-service:devel
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SC_ELECTIONS_DB_NAME}
@@ -23,7 +23,7 @@ services:
             REDIS_PORT: 6379
             REDIS_DB: 2
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -34,7 +34,7 @@ services:
                     - node.labels.env == prod
 
     sc-citizens-service:
-        image: ghcr.io/at-sovereign-technologies/citizen-query-service:stable
+        image: ghcr.io/at-sovereign-technologies/citizen-query-service:devel
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SC_CITIZENS_DB_NAME}
@@ -44,7 +44,7 @@ services:
             REDIS_PORT: 6379
             REDIS_DB: 0
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -55,7 +55,7 @@ services:
                     - node.labels.env == prod
 
     sc-results-service:
-        image: ghcr.io/at-sovereign-technologies/results-service:stable
+        image: ghcr.io/at-sovereign-technologies/results-service:devel
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SC_RESULTS_DB_NAME}
@@ -65,7 +65,7 @@ services:
             REDIS_PORT: 6379
             REDIS_DB: 1
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -76,7 +76,7 @@ services:
                     - node.labels.env == prod
 
     sc-transparency-service:
-        image: ghcr.io/at-sovereign-technologies/transparency-service:stable
+        image: ghcr.io/at-sovereign-technologies/transparency-service:devel
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SC_TRANSPARENCY_DB_NAME}
@@ -86,7 +86,7 @@ services:
             REDIS_PORT: 6379
             REDIS_DB: 3
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:

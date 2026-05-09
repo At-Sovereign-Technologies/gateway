@@ -1,8 +1,8 @@
 services:
     sr-elections-frontend:
-        image: ghcr.io/at-sovereign-technologies/frontend-configuracionelecciones:stable
+        image: ghcr.io/at-sovereign-technologies/frontend-configuracionelecciones:devel
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -13,9 +13,9 @@ services:
                     - node.labels.env == prod
 
     sr-pre-elections-frontend:
-        image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:stable
+        image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:devel
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -26,14 +26,14 @@ services:
                     - node.labels.env == prod
 
     sr-elections-service:
-        image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:stable
+        image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:devel
         environment:
             PORT: 8081
             DB_URL: jdbc:postgresql://postgres:5432/${SR_ELECTIONS_DB_NAME}
             DB_USERNAME: ${SR_ELECTIONS_DB_USER}
             DB_PASSWORD: ${SR_ELECTIONS_DB_PASSWORD}
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
@@ -44,14 +44,14 @@ services:
                     - node.labels.env == prod
 
     sr-pre-elections-service:
-        image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:stable
+        image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:devel
         environment:
             PUERTO: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_PRE_ELECTIONS_DB_NAME}
             DB_USUARIO: ${SR_PRE_ELECTIONS_DB_USER}
             DB_CLAVE: ${SR_PRE_ELECTIONS_DB_PASSWORD}
         networks:
-            - sello-net-prod
+            - sello-net-qa
         deploy:
             replicas: 1
             restart_policy:
