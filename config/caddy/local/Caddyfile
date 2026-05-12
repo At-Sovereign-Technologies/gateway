@@ -1,0 +1,7 @@
+{
+    auto_https off
+}
+
+:8091 {
+    reverse_proxy sr-frontend:80
+}
