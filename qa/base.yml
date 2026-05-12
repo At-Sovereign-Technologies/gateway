@@ -4,7 +4,7 @@ services:
         ports:
             - 4000:443
         configs:
-            - source: caddy-config-prod
+            - source: caddy-config-qa
               target: /etc/caddy/Caddyfile
               mode: 0444
         networks:
@@ -71,7 +71,7 @@ services:
                     - node.labels.env == qa
 
 configs:
-    caddy-config-prod:
+    caddy-config-qa:
         external: true
     postgres-init-prod:
         external: true
