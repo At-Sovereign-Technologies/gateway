@@ -11,7 +11,7 @@ adminer.sello-legitimo.site {
     }
 }
 
-ciudadano.sello-legitimo.site {
+sello-legitimo.site {
     tls internal
 
 	# Citizens Service
