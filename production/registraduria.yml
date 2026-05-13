@@ -42,7 +42,7 @@ services:
             PUERTO: 8080
             ELECCIONES_GRPC_HOST: sr-elections-service
             ELECCIONES_GRPC_PORT: 9090
-            CENSO_SERVICE_URL: https://sr-pre-elections-service
+            CENSO_SERVICE_URL: /
         networks:
             - sello-net-prod
         deploy:
@@ -53,4 +53,21 @@ services:
                 constraints:
                     - node.labels.type == microservices
                     - node.labels.env == prod
-    
+                    
+    sr-scrutiny-service:
+        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
+            DB_USER: ${SR_SCRUTINY_DB_USER}
+            DB_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
