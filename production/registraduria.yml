@@ -1,37 +1,12 @@
 services:
-    sr-elections-frontend:
-        image: ghcr.io/at-sovereign-technologies/frontend-configuracionelecciones:stable
-        networks:
-            - sello-net-prod
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.labels.type == frontend
-                    - node.labels.env == prod
-
-    sr-pre-elections-frontend:
-        image: ghcr.io/at-sovereign-technologies/frontend-gestionpreelectoral:stable
-        networks:
-            - sello-net-prod
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.labels.type == frontend
-                    - node.labels.env == prod
-
     sr-elections-service:
         image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:stable
         environment:
-            PORT: 8081
+            PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_ELECTIONS_DB_NAME}
             DB_USERNAME: ${SR_ELECTIONS_DB_USER}
             DB_PASSWORD: ${SR_ELECTIONS_DB_PASSWORD}
+            GRPC_PORT: 9090
         networks:
             - sello-net-prod
         deploy:
@@ -50,6 +25,42 @@ services:
             DB_URL: jdbc:postgresql://postgres:5432/${SR_PRE_ELECTIONS_DB_NAME}
             DB_USUARIO: ${SR_PRE_ELECTIONS_DB_USER}
             DB_CLAVE: ${SR_PRE_ELECTIONS_DB_PASSWORD}
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
+    
+    sr-mock-jury-service:
+        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
+        environment:
+            PUERTO: 8080
+            ELECCIONES_GRPC_HOST: sr-elections-service
+            ELECCIONES_GRPC_PORT: 9090
+            CENSO_SERVICE_URL: /
+        networks:
+            - sello-net-prod
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == prod
+                    
+    sr-scrutiny-service:
+        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
+        environment:
+            PORT: 8080
+            DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
+            DB_USER: ${SR_SCRUTINY_DB_USER}
+            DB_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
         networks:
             - sello-net-prod
         deploy:
