@@ -11,7 +11,7 @@
 
 	# Frontend
 	handle {
-		reverse_proxy sc-frontend:80
+		reverse_proxy frontend:80
 	}
 }
 
