@@ -1,17 +1,4 @@
 services:
-    sc-frontend:
-        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:devel
-        networks:
-            - sello-net-qa
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.labels.type == frontend
-                    - node.labels.env == qa
-
     sc-elections-service:
         image: ghcr.io/at-sovereign-technologies/election-query-service:devel
         environment:

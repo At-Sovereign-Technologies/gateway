@@ -3,17 +3,19 @@
     local_certs
 }
 
-adminer.qa.sello-legitimo.site {
-    tls internal
-    
-    reverse_proxy adminer:8080 {
-        header_up X-Forwarded-Proto {scheme}
-    }
+(base) {
+	# Catch all to prevent endpoint issues - Augusto
+	handle /api/* {
+		respond "Forbidden" 403
+	}
+
+	# Frontend
+	handle {
+		reverse_proxy frontend:80
+	}
 }
 
-qa.sello-legitimo.site {
-    tls internal
-
+(sc-api) {
 	# Citizens Service
 	@citizen_match {
 		path /api/v1/citizen /api/v1/citizen/*
@@ -49,38 +51,60 @@ qa.sello-legitimo.site {
 	handle @transparency_match {
 		reverse_proxy sc-transparency-service:8080
 	}
+}
 
-	# Catch all to prevent endpoint issues - Augusto
-	handle /api/* {
-		respond "Forbidden" 403
+(sr-api) {
+	# Pre-elections Service (pre-electoral)
+	@pre_elections_match {
+		path /api/candidaturas /api/candidaturas/* /api/censo /api/censo/*
 	}
 
-	# Frontend
-	handle {
-		reverse_proxy sc-frontend:80
+	handle @pre_elections_match {
+		reverse_proxy sr-pre-elections-service:8080
+	}
+
+	# Elections Service
+	@elections_match {
+		path /api/elecciones /api/elecciones/*
+	}
+
+	handle @elections_match {
+		reverse_proxy sr-elections-service:8080
+	}
+
+	# Jury Mock Service
+	@jury_match {
+		path /api/jurados /api/jurados/*
+	}
+
+	handle @jury_match {
+		reverse_proxy sr-mock-jury-service:8080
+	}
+
+	# Scrutiny Service
+	@scrutiny_match {
+		path /api/v1/e14 /api/v1/e14/*
+	}
+
+	handle @scrutiny_match {
+		reverse_proxy sr-scrutiny-service:8080
 	}
 }
 
-preeleccion.qa.sello-legitimo.site {
+qa.sello-legitimo.site {
     tls internal
 
-    handle /api/* {
-        reverse_proxy sr-pre-elections-service:8080
-    }
+	import sc-api
+	import sr-api
 
-    handle {
-        reverse_proxy sr-pre-elections-frontend:80
-    }
+	# Es importante que base este de ultimo - Augusto
+	import base 
 }
 
-eleccion.qa.sello-legitimo.site {
+adminer-qa.sello-legitimo.site {
     tls internal
-
-    handle /api/* {
-        reverse_proxy sr-elections-service:8081 
-    }
-
-    handle {
-        reverse_proxy sr-elections-frontend:80
+    
+    reverse_proxy adminer:8080 {
+        header_up X-Forwarded-Proto {scheme}
     }
 }

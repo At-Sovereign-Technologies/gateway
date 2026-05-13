@@ -33,6 +33,20 @@ services:
                 constraints:
                     - node.role == manager
 
+    frontend:
+        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:stable
+        networks:
+            - sello-net-qa
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
+                    - node.labels.env == qa
+
+
     postgres:
         image: postgres:14
         environment:
