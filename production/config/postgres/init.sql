@@ -21,3 +21,7 @@ CREATE DATABASE sr_elections_db OWNER sc_elections_user;
 -- Pre-electoral Service
 CREATE USER sr_pre_elections_user WITH PASSWORD '123456';
 CREATE DATABASE sr_pre_elections_db OWNER sr_pre_elections_user;
+
+-- Scrutiny Service
+CREATE USER sr_scrutiny_user WITH PASSWORD '123456';
+CREATE DATABASE sr_scrutiny_db OWNER sr_scrutiny_user;
