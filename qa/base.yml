@@ -34,7 +34,7 @@ services:
                     - node.role == manager
 
     frontend:
-        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:stable
+        image: ghcr.io/at-sovereign-technologies/sello-legitimo-frontend:devel
         networks:
             - sello-net-qa
         deploy:
