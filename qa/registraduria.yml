@@ -55,12 +55,32 @@ services:
                     - node.labels.env == qa
                     
     sr-scrutiny-service:
-        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
+        image: ghcr.io/at-sovereign-technologies/scrutiny-service:devel
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
             DB_USER: ${SR_SCRUTINY_DB_USER}
             DB_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
+        networks:
+            - sello-net-qa
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == microservices
+                    - node.labels.env == qa
+
+    fraude-service:
+        image: ghcr.io/at-sovereign-technologies/fraude-service:devel
+        environment:
+            PORT: 8084
+            FRAUDE_DB_HOST: postgres
+            FRAUDE_DB_PORT: 5432
+            FRAUDE_DB_NAME: ${FRAUDE_DB_NAME}
+            FRAUDE_DB_USER: ${FRAUDE_DB_USER}
+            FRAUDE_DB_PASSWORD: ${FRAUDE_DB_PASSWORD}
         networks:
             - sello-net-qa
         deploy:
