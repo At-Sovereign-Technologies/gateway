@@ -1,6 +1,6 @@
 services:
     sr-elections-service:
-        image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:devel
+        image: ghcr.io/at-sovereign-technologies/configuracioneleccion-service:stable
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_ELECTIONS_DB_NAME}
@@ -19,7 +19,7 @@ services:
                     - node.labels.env == qa
 
     sr-pre-elections-service:
-        image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:devel
+        image: ghcr.io/at-sovereign-technologies/gestionpreelectoral-service:stable
         environment:
             PUERTO: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_PRE_ELECTIONS_DB_NAME}
@@ -37,7 +37,7 @@ services:
                     - node.labels.env == qa
     
     sr-mock-jury-service:
-        image: ghcr.io/at-sovereign-technologies/mockjurados-service:devel
+        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
         environment:
             PUERTO: 8080
             ELECCIONES_GRPC_HOST: sr-elections-service
