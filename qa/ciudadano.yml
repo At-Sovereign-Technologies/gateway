@@ -83,17 +83,11 @@ services:
                     - node.labels.type == microservices
                     - node.labels.env == qa
 
-    dashboards-rol-service:
-        image: ghcr.io/at-sovereign-technologies/m4-site-dashboards-rol-service:devel
-        environment:
-            PORT: 8085
-        networks:
-            - sello-net-qa
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.labels.type == frontend
-                    - node.labels.env == qa
+    # dashboards-rol-service:
+    #     TODO: add when GHCR image exists. Repo: M4-SITE-Dashboards-Rol-Service
+    #     CI deploy-devel.yml exists on devel branch, but first run needs approval.
+    #     image: ghcr.io/at-sovereign-technologies/m4-site-dashboards-rol-service:devel
+    #     environment:
+    #         PORT: 8085
+    #     networks:
+    #         - sello-net-qa
