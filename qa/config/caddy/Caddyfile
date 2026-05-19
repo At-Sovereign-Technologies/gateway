@@ -94,6 +94,27 @@
 qa.sello-legitimo.site {
     tls internal
 
+	# CORS preflight handler — must come before other handle blocks
+	@cors_preflight {
+		method OPTIONS
+	}
+	handle @cors_preflight {
+		header {
+			Access-Control-Allow-Origin "*"
+			Access-Control-Allow-Methods "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+			Access-Control-Allow-Headers "Content-Type, Authorization, X-Mock-Role, X-User-Role, X-User-Id"
+			Access-Control-Max-Age "86400"
+		}
+		respond 204
+	}
+
+	# CORS headers on all responses
+	header {
+		Access-Control-Allow-Origin "*"
+		Access-Control-Allow-Methods "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+		Access-Control-Allow-Headers "Content-Type, Authorization, X-Mock-Role, X-User-Role, X-User-Id"
+	}
+
 	import sc-api
 	import sr-api
 
