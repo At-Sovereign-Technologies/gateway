@@ -78,9 +78,9 @@ services:
             PORT: 8084
             FRAUDE_DB_HOST: postgres
             FRAUDE_DB_PORT: 5432
-            FRAUDE_DB_NAME: fraude_db
-            FRAUDE_DB_USER: fraude_user
-            FRAUDE_DB_PASSWORD: 123456
+            FRAUDE_DB_NAME: ${FRAUDE_DB_NAME}
+            FRAUDE_DB_USER: ${FRAUDE_DB_USER}
+            FRAUDE_DB_PASSWORD: ${FRAUDE_DB_PASSWORD}
         networks:
             - sello-net-qa
         deploy:
