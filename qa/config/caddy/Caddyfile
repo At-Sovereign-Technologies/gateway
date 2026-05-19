@@ -142,8 +142,17 @@ qa.sello-legitimo.site {
 		Access-Control-Allow-Headers "Content-Type, Authorization, X-Mock-Role, X-User-Role, X-User-Id"
 	}
 
-	import sc-api
+		import sc-api
 	import sr-api
+
+	# Dashboard Rol Service
+	@dashboard_match {
+		path /api/v1/dashboard /api/v1/dashboard/*
+	}
+
+	handle @dashboard_match {
+		reverse_proxy dashboards-rol-service:8085
+	}
 
 	# Es importante que base este de ultimo - Augusto
 	import base 
