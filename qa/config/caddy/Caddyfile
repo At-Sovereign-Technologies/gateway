@@ -83,7 +83,7 @@
 
 	# Jury Mock Service
 	@jury_match {
-		path /api/jurados /api/jurados/*
+		path /api/jurados /api/jurados/* /mock /mock/*
 	}
 
 	handle @jury_match {
@@ -101,7 +101,7 @@
 
 	# Fraude Service
 	@fraude_match {
-		path /api/v1/fraude /api/v1/fraude/*
+		path /api/v1/fraude /api/v1/fraude/* /api/v1/fraud-engine /api/v1/fraud-engine/*
 	}
 
 	handle @fraude_match {
