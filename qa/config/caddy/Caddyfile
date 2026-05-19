@@ -145,14 +145,13 @@ qa.sello-legitimo.site {
 		import sc-api
 	import sr-api
 
-	# Dashboard Rol Service (TODO: deploy M4-SITE-Dashboards-Rol-Service)
+	# Dashboard Rol Service
 	@dashboard_match {
 		path /api/v1/dashboard /api/v1/dashboard/*
 	}
 
 	handle @dashboard_match {
-		header Content-Type "application/json"
-		respond `{"error":"NOT_IMPLEMENTED","message":"El servicio de dashboard aun no esta desplegado en QA. Pendiente: build + deploy de M4-SITE-Dashboards-Rol-Service."}` 501
+		reverse_proxy dashboards-rol-service:8085
 	}
 
 	# Es importante que base este de ultimo - Augusto
