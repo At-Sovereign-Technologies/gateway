@@ -25,6 +25,8 @@ services:
             DB_URL: jdbc:postgresql://postgres:5432/${SR_PRE_ELECTIONS_DB_NAME}
             DB_USUARIO: ${SR_PRE_ELECTIONS_DB_USER}
             DB_CLAVE: ${SR_PRE_ELECTIONS_DB_PASSWORD}
+            ELECCIONES_GRPC_HOST: sr-elections-service
+            ELECCIONES_GRPC_PORT: 9090
         networks:
             - sello-net-prod
         deploy:
