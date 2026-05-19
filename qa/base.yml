@@ -84,6 +84,21 @@ services:
                     - node.labels.type == storage
                     - node.labels.env == qa
 
+    dashboards-rol-service:
+        image: ghcr.io/at-sovereign-technologies/m4-site-dashboards-rol-service:devel
+        environment:
+            PORT: 8085
+        networks:
+            - sello-net-qa
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints:
+                    - node.labels.type == frontend
+                    - node.labels.env == qa
+
 configs:
     caddy-config-qa:
         external: true
