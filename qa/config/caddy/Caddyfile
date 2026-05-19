@@ -54,21 +54,30 @@
 }
 
 (sr-api) {
-	# Pre-elections Service (pre-electoral)
+	# Pre-elections Service (pre-electoral) — non-v1 routes
 	@pre_elections_match {
-		path /api/candidaturas /api/candidaturas/* /api/censo /api/censo/*
+		path /api/candidaturas /api/candidaturas/* /api/censo /api/censo/* /api/actas /api/actas/* /api/auditoria /api/auditoria/*
 	}
 
 	handle @pre_elections_match {
 		reverse_proxy sr-pre-elections-service:8080
 	}
 
+	# Pre-elections Service — v1 routes (auth, vault, ceremony, jurados, mesas, lista-blanca)
+	@pre_elections_v1 {
+		path /api/v1/auth /api/v1/auth/* /api/v1/vault /api/v1/vault/* /api/v1/ceremony /api/v1/ceremony/* /api/v1/jurados /api/v1/jurados/* /api/v1/mesas /api/v1/mesas/* /api/v1/lista-blanca /api/v1/lista-blanca/*
+	}
+
+	handle @pre_elections_v1 {
+		reverse_proxy sr-pre-elections-service:8080
+	}
+
 	# Elections Service
-	@elections_match {
+	@sr_elections_match {
 		path /api/elecciones /api/elecciones/*
 	}
 
-	handle @elections_match {
+	handle @sr_elections_match {
 		reverse_proxy sr-elections-service:8080
 	}
 
@@ -88,6 +97,15 @@
 
 	handle @scrutiny_match {
 		reverse_proxy sr-scrutiny-service:8080
+	}
+
+	# Fraude Service
+	@fraude_match {
+		path /api/v1/fraude /api/v1/fraude/*
+	}
+
+	handle @fraude_match {
+		reverse_proxy fraude-service:8084
 	}
 }
 
