@@ -99,13 +99,22 @@
 		reverse_proxy sr-scrutiny-service:8080
 	}
 
-	# Fraude Service
+	# Fraude Service (alerts, events, health)
 	@fraude_match {
-		path /api/v1/fraude /api/v1/fraude/* /api/v1/fraud-engine /api/v1/fraud-engine/*
+		path /api/v1/fraude /api/v1/fraude/*
 	}
 
 	handle @fraude_match {
 		reverse_proxy fraude-service:8084
+	}
+
+	# Fraud Engine (rules CRUD + evaluate — implemented in ConfiguracionEleccion-service)
+	@fraud_engine_match {
+		path /api/v1/fraud-engine /api/v1/fraud-engine/*
+	}
+
+	handle @fraud_engine_match {
+		reverse_proxy sr-elections-service:8080
 	}
 }
 
