@@ -60,9 +60,9 @@ services:
         image: ghcr.io/at-sovereign-technologies/scrutiny-service:stable
         environment:
             SERVER_PORT: 8080
-            DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
-            DB_USER: ${SR_SCRUTINY_DB_USER}
-            DB_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
+            SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
+            SPRING_DATASOURCE_USERNAME: ${SR_SCRUTINY_DB_USER}
+            SPRING_DATASOURCE_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
         networks:
             - sello-net-prod
         deploy:
