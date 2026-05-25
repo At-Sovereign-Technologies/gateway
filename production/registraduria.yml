@@ -55,7 +55,7 @@ services:
                     - node.labels.env == prod
                     
     sr-scrutiny-service:
-        image: ghcr.io/at-sovereign-technologies/mockjurados-service:stable
+        image: ghcr.io/at-sovereign-technologies/scrutiny-service:stable
         environment:
             PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
