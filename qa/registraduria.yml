@@ -59,7 +59,7 @@ services:
     sr-scrutiny-service:
         image: ghcr.io/at-sovereign-technologies/scrutiny-service:devel
         environment:
-            PORT: 8080
+            SERVER_PORT: 8080
             DB_URL: jdbc:postgresql://postgres:5432/${SR_SCRUTINY_DB_NAME}
             DB_USER: ${SR_SCRUTINY_DB_USER}
             DB_PASSWORD: ${SR_SCRUTINY_DB_PASSWORD}
