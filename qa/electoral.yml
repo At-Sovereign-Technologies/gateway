@@ -11,7 +11,7 @@ services:
             condition: on-failure
         placement:
             constraints:
-                - node.labels.type == microservices
+                - node.labels.type == frontend
                 - node.labels.env == qa
 
   se-servidor-electoral-backend:
