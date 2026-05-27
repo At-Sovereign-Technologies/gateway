@@ -1,0 +1,15 @@
+services:
+  se-servidor-electoral-frontend:
+    image: ghcr.io/at-sovereign-technologies/servidor-electoral-frontend:stable
+    environment:
+      INTERNAL_GQL_HOST: http://se-servidor-electoral-backend:8080
+
+  se-servidor-electoral-backend:
+    image: ghcr.io/at-sovereign-technologies/servidor-electoral:stable
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${SE_SERVIDOR_ELECTORAL_DB_USER}
+      DB_PASSWORD: ${SE_SERVIDOR_ELECTORAL_DB_PASSWORD}
+      DB_NAME: ${SE_SERVIDOR_ELECTORAL_DB_NAME}
+      ELECTORAL_SECRET: very-secure-secret
