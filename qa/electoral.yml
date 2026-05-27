@@ -3,6 +3,7 @@ services:
     image: ghcr.io/at-sovereign-technologies/servidor-electoral-frontend:stable
     environment:
       INTERNAL_GQL_HOST: http://se-servidor-electoral-backend:8080/query
+      GQL_HOST: http://se-servidor-electoral-backend:8080/query
     networks:
         - sello-net-qa
     deploy:
