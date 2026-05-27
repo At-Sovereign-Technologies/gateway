@@ -5,7 +5,7 @@ services:
     ports:
       - "8092:443"
     volumes:
-      - ./devel-config/caddy:/etc/caddy:ro
+      - ./development/config/caddy:/etc/caddy:ro
       - caddy_data:/data
       - caddy_config:/config
     networks:

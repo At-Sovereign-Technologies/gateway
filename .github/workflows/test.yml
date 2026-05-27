@@ -1,0 +1,28 @@
+name: Gateway Config CI
+
+on:
+  push:
+    branches: [ main, devel ]
+  pull_request:
+    branches: [ main, devel ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate stack files
+        run: |
+          docker compose -f development/development.yml config > /dev/null
+          docker compose -f qa/registraduria.yml config > /dev/null
+          docker compose -f production/registraduria.yml config > /dev/null
+
+      - name: Validate Caddy configurations
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/development/config/caddy/Caddyfile
+          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/qa/config/caddy/Caddyfile
+          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/production/config/caddy/Caddyfile
