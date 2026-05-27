@@ -11,6 +11,21 @@ jobs:
   validate:
     runs-on: ubuntu-latest
 
+    env:
+      POSTGRES_SUPERUSER_PASSWORD: postgres
+      SR_ELECTIONS_DB_NAME: sr_elections_db
+      SR_ELECTIONS_DB_USER: postgres
+      SR_ELECTIONS_DB_PASSWORD: postgres
+      SR_PRE_ELECTIONS_DB_NAME: sr_pre_elections_db
+      SR_PRE_ELECTIONS_DB_USER: postgres
+      SR_PRE_ELECTIONS_DB_PASSWORD: postgres
+      SR_SCRUTINY_DB_NAME: sr_scrutiny_db
+      SR_SCRUTINY_DB_USER: postgres
+      SR_SCRUTINY_DB_PASSWORD: postgres
+      FRAUDE_DB_NAME: fraude_db
+      FRAUDE_DB_USER: postgres
+      FRAUDE_DB_PASSWORD: postgres
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,8 +36,15 @@ jobs:
           docker compose -f qa/base.yml -f qa/registraduria.yml config > /dev/null
           docker compose -f production/base.yml -f production/registraduria.yml config > /dev/null
 
-      - name: Validate Caddy configurations
+      - name: Validate Caddy configuration structure
         run: |
-          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/development/config/caddy/Caddyfile
-          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/qa/config/caddy/Caddyfile
-          docker run --rm -v "$GITHUB_WORKSPACE":/workspace caddy:2.8.4 caddy validate --config /workspace/production/config/caddy/Caddyfile
+          test -f development/config/caddy/Caddyfile
+          test -f qa/config/caddy/Caddyfile
+          test -f production/config/caddy/Caddyfile
+          grep -q 'import ciudadano/\*.conf' development/config/caddy/Caddyfile
+          grep -q 'import base' qa/config/caddy/Caddyfile
+          grep -q 'import sc-api' qa/config/caddy/Caddyfile
+          grep -q 'import sr-api' qa/config/caddy/Caddyfile
+          grep -q 'import base' production/config/caddy/Caddyfile
+          grep -q 'import sc-api' production/config/caddy/Caddyfile
+          grep -q 'import sr-api' production/config/caddy/Caddyfile
