@@ -3,7 +3,16 @@ services:
     image: ghcr.io/at-sovereign-technologies/servidor-electoral-frontend:stable
     environment:
       INTERNAL_GQL_HOST: http://se-servidor-electoral-backend:8080
-
+    networks:
+        - sello-net-qa
+    deploy:
+        replicas: 1
+        restart_policy:
+            condition: on-failure
+        placement:
+            constraints:
+                - node.labels.type == microservices
+                - node.labels.env == qa
   se-servidor-electoral-backend:
     image: ghcr.io/at-sovereign-technologies/servidor-electoral:stable
     environment:
@@ -13,3 +22,13 @@ services:
       DB_PASSWORD: ${SE_SERVIDOR_ELECTORAL_DB_PASSWORD}
       DB_NAME: ${SE_SERVIDOR_ELECTORAL_DB_NAME}
       ELECTORAL_SECRET: very-secure-secret
+      networks:
+          - sello-net-qa
+      deploy:
+          replicas: 1
+          restart_policy:
+              condition: on-failure
+          placement:
+              constraints:
+                  - node.labels.type == microservices
+                  - node.labels.env == qa
