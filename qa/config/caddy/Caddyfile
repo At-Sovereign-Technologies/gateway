@@ -125,6 +125,7 @@ qa.sello-legitimo.site {
 	@cors_preflight {
 		method OPTIONS
 	}
+
 	handle @cors_preflight {
 		header {
 			Access-Control-Allow-Origin "*"
@@ -142,7 +143,7 @@ qa.sello-legitimo.site {
 		Access-Control-Allow-Headers "Content-Type, Authorization, X-Mock-Role, X-User-Role, X-User-Id"
 	}
 
-		import sc-api
+	import sc-api
 	import sr-api
 
 	# Dashboard Rol Service
@@ -156,6 +157,12 @@ qa.sello-legitimo.site {
 
 	# Es importante que base este de ultimo - Augusto
 	import base 
+}
+
+electoral-qa.sello-legitimo.site {
+	handle {
+		reverse_proxy se-servidor-electoral-frontend:3000
+	}
 }
 
 adminer-qa.sello-legitimo.site {
