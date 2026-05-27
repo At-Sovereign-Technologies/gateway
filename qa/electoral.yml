@@ -4,7 +4,6 @@ services:
     environment:
       INTERNAL_GQL_HOST: http://se-servidor-electoral-backend:8080/query
       GQL_HOST: http://se-servidor-electoral-backend:8080/query
-      GQL_CLIENT_HOST: 
     networks:
         - sello-net-qa
     deploy:
