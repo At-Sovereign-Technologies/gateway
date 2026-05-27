@@ -18,8 +18,8 @@ jobs:
       - name: Validate stack files
         run: |
           docker compose -f development/development.yml config > /dev/null
-          docker compose -f qa/registraduria.yml config > /dev/null
-          docker compose -f production/registraduria.yml config > /dev/null
+          docker compose -f qa/base.yml -f qa/registraduria.yml config > /dev/null
+          docker compose -f production/base.yml -f production/registraduria.yml config > /dev/null
 
       - name: Validate Caddy configurations
         run: |
